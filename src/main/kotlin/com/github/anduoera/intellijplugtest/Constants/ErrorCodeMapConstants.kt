@@ -11,6 +11,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import com.intellij.psi.util.PsiTreeUtil
 import kotlinx.coroutines.*
+import java.util.concurrent.ConcurrentHashMap
 
 class ErrorCodeMapConstants private constructor() {
     companion object {
@@ -30,7 +31,7 @@ class ErrorCodeMapConstants private constructor() {
 
 
     fun refreshErrorCodeMap(file: PsiFile) {
-        val projectMap = errorCodeMap[file.project.name] ?: mutableMapOf()
+        val projectMap = errorCodeMap.getOrPut(file.project.name) { ConcurrentHashMap() }
         errorCodeMap[file.project.name] = projectMap
 
         // 使用 Iterator 安全地遍历和修改 projectMap
@@ -70,7 +71,7 @@ class ErrorCodeMapConstants private constructor() {
         openProjects.map {
             runBlocking {
                 launch {
-                    errorCodeMap[it.name] = getCodeMap(it)
+                    errorCodeMap[it.name] = ConcurrentHashMap(getCodeMap(it))
                 }
             }
         }

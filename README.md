@@ -17,10 +17,10 @@
 - [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
 <!-- Plugin description -->
-《Adoni-检查重复错误码》
-错误码路径为 /model/exception
-package为 exception 
-不可改变
+Adoni-ErrorCodeExamine.
+ErrorCode Path is /model/exception.
+ErrorCode package is package exception. 
+do not change.
 <!-- Plugin description end -->
 
 ## Installation

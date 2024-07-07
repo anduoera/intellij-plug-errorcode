@@ -20,12 +20,16 @@ class CheckDuplicateErrorCodesInspection : LocalInspectionTool() {
             override fun visitFile(file: PsiFile) {
                 if (file !is GoFile) return
                 val packageClause: GoPackageClause? = file.getPackage()
-                if(packageClause?.name!="exception")return
+                if (packageClause?.name != "exception") return
 
-                ErrorCodeMapConstants.instance.refreshErrorCodeMap(file)
+                try {
+                    ErrorCodeMapConstants.instance.refreshErrorCodeMap(file)
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
 
                 val projectMapLists = map[file.project.name]
-                projectMapLists?.forEach {  key, value ->
+                projectMapLists?.forEach { key, value ->
                     val errorCodeList = value
                     if (errorCodeList.size > 1) {
                         errorCodeList.forEach { errorCode ->
@@ -40,7 +44,7 @@ class CheckDuplicateErrorCodesInspection : LocalInspectionTool() {
                     } else if (value[0].isText) {
                         holder.registerProblem(
                                 value[0].psiElement,
-                                "Duplicate ErrorCode: ${key}",
+                                "Non-numeric ErrorCode: ${key}",
                                 ProblemHighlightType.GENERIC_ERROR_OR_WARNING
                         )
                     }
