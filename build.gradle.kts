@@ -23,7 +23,7 @@ repositories {
 
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
-//    implementation(libs.exampleLibrary)
+    implementation(kotlin("stdlib"))
 }
 
 // Set the JVM language level used to build the project.
@@ -39,6 +39,11 @@ intellij {
 
     // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.
     plugins = properties("platformPlugins").map { it.split(',').map(String::trim).filter(String::isNotEmpty) }
+    version.set("2023.1")
+    type.set("GO")
+
+    // required if Go language API is needed:
+    plugins.set(listOf("org.jetbrains.plugins.go"))
 }
 
 // Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
