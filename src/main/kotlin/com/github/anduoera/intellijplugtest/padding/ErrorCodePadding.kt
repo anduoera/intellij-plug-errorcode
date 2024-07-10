@@ -1,5 +1,6 @@
-package com.github.anduoera.intellijplugtest.padding
+package com.github.anduoera.intellijplugtest .padding
 
+import com.github.anduoera.intellijplugtest.Constants.ErrorCodeMapConstants
 import com.goide.psi.GoConstDeclaration
 import com.goide.psi.GoFile
 import com.goide.psi.GoPackageClause
@@ -14,27 +15,32 @@ import java.util.TreeSet
 
 
 class ErrorCodePadding : TypedHandlerDelegate() {
+    val map = ErrorCodeMapConstants.instance.getErrorCodeMap()
     override fun charTyped(c: Char, project: Project, editor: Editor, file: PsiFile): Result {
         if (file !is GoFile) return Result.STOP
         val packageClause: GoPackageClause? = file.getPackage()
         if (packageClause?.name != "exception") return Result.STOP
-        var errorCode = getFileLastErrorCode(file)
         val document = editor.document
         val caretModel = editor.caretModel
         val offset = caretModel.offset
         val currentLineNumber = document.getLineNumber(offset)
-
+        val projectMapLists = map[file.project.name]
         if (currentLineNumber > 0) {
             val previousLineNumber = currentLineNumber - 1
             val previousLineStartOffset = document.getLineStartOffset(previousLineNumber)
             val previousLineEndOffset = document.getLineEndOffset(previousLineNumber)
             val previousLineText = document.getText().substring(previousLineStartOffset, previousLineEndOffset)
-            if (previousLineText.contains("ErrorCode") || currentLineNumber < 10) {
+            if (previousLineText.contains("ErrorCode") || (currentLineNumber<10&&previousLineText.contains("const") )) {
                 val lineStartOffset = document.getLineStartOffset(document.getLineNumber(offset))
                 val lineEndOffset = document.getLineEndOffset(document.getLineNumber(offset))
                 val lineText = document.getText().substring(lineStartOffset, lineEndOffset)
+                var errorCode = getFileLastErrorCode(file)
+                var num=errorCode.first()
                 if (lineText.length < 10) {
-                    val keyword = "\tErrorCode = \"${errorCode.first() + 1}\""
+                    do {
+                        num++
+                    }while (projectMapLists?.containsKey(num.toString()) == true)
+                    val keyword = "\tErrorCode = \"${num}\""
                     document.replaceString(lineStartOffset, lineEndOffset, keyword)
                     caretModel.moveToOffset(lineStartOffset + keyword.split("=")[0].trim().length + 1)
                     return Result.CONTINUE
