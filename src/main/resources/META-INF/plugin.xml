@@ -7,17 +7,15 @@
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.plugins.go</depends>
 
-    <resource-bundle>messages.MyBundle</resource-bundle>
 
     <extensions defaultExtensionNs="com.intellij">
         <localInspection
-                         bundle="messages.MyBundle"
-                         key="inspection.comparing.string.references.display.name"
-                         groupPath="Java"
-                         groupBundle="messages.InspectionsBundle"
-                         groupKey="group.names.probable.bugs"
-                         enabledByDefault="true"
-                         level="WARNING"
-                         implementationClass="com.github.anduoera.intellijplugtest.codeInspection.CheckDuplicateErrorCodesInspection"/>
+                groupPath="Java"
+                groupBundle="messages.InspectionsBundle"
+                groupKey="group.names.probable.bugs"
+                enabledByDefault="true"
+                level="WARNING"
+                implementationClass="com.github.anduoera.intellijplugtest.codeInspection.CheckDuplicateErrorCodesInspection"/>
+        <typedHandler implementation="com.github.anduoera.intellijplugtest.padding.ErrorCodePadding"/>
     </extensions>
 </idea-plugin>

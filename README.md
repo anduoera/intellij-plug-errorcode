@@ -17,9 +17,12 @@
 - [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
 <!-- Plugin description -->
-Adoni-ErrorCodeExamine.
+Adoni-ErrorCodeExamine
+
 ErrorCode Path is /model/exception.
+
 ErrorCode package is package exception. 
+
 do not change.
 <!-- Plugin description end -->
 
