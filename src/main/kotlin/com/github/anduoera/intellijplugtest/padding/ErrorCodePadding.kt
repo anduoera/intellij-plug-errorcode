@@ -29,14 +29,14 @@ class ErrorCodePadding : TypedHandlerDelegate() {
             val previousLineStartOffset = document.getLineStartOffset(previousLineNumber)
             val previousLineEndOffset = document.getLineEndOffset(previousLineNumber)
             val previousLineText = document.getText().substring(previousLineStartOffset, previousLineEndOffset)
-            if (previousLineText.contains("ErrorCode")) {
+            if (previousLineText.contains("ErrorCode") || currentLineNumber < 10) {
                 val lineStartOffset = document.getLineStartOffset(document.getLineNumber(offset))
                 val lineEndOffset = document.getLineEndOffset(document.getLineNumber(offset))
                 val lineText = document.getText().substring(lineStartOffset, lineEndOffset)
                 if (lineText.length < 10) {
                     val keyword = "\tErrorCode = \"${errorCode.first() + 1}\""
                     document.replaceString(lineStartOffset, lineEndOffset, keyword)
-                    caretModel.moveToOffset(lineStartOffset + keyword.split("=")[0].trim().length+1)
+                    caretModel.moveToOffset(lineStartOffset + keyword.split("=")[0].trim().length + 1)
                     return Result.CONTINUE
                 }
             }
