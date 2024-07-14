@@ -1,6 +1,6 @@
 <!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>com.github.anduoera.intellijplugtest</id>
+    <id>com.github.anduoera.intellijplug</id>
     <name>ErrorCodeExamine</name>
     <vendor>adoni</vendor>
 
@@ -15,7 +15,25 @@
                 groupKey="group.names.probable.bugs"
                 enabledByDefault="true"
                 level="WARNING"
-                implementationClass="com.github.anduoera.intellijplugtest.codeInspection.CheckDuplicateErrorCodesInspection"/>
-        <typedHandler implementation="com.github.anduoera.intellijplugtest.padding.ErrorCodePadding"/>
+                implementationClass="com.github.anduoera.intellijplug.listenFileChange.FileChangeListen"/>
+        <typedHandler implementation="com.github.anduoera.intellijplug.listenCodeChange.CodeChangeListen"/>
     </extensions>
+
+    <applicationListeners>
+        <listener class="com.github.anduoera.intellijplug.StartupComponent" topic="com.intellij.ide.AppLifecycleListener"/>
+    </applicationListeners>
+
+    <actions>
+        <action id="com.github.anduoera.intellijplug.myAnAction.ModifyErrorCodeAction" class="com.github.anduoera.intellijplug.myAnAction.ModifyErrorCodeAction" text="Modify Duplicated Error Codes" description="Modify duplicated error codes">
+            <add-to-group group-id="GenerateGroup" anchor="last"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift K"/>
+        </action>
+
+        <action
+                id="com.github.anduoera.intellijplug.myAnAction.AllSettingsAction"
+                class="com.github.anduoera.intellijplug.myAnAction.AllSettingsAction"
+                text="Error Code Settings">
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+    </actions>
 </idea-plugin>
