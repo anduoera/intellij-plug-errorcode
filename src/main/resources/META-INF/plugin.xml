@@ -26,7 +26,7 @@
     <actions>
         <action id="com.github.anduoera.intellijplug.myAnAction.ModifyErrorCodeAction" class="com.github.anduoera.intellijplug.myAnAction.ModifyErrorCodeAction" text="Modify Duplicated Error Codes" description="Modify duplicated error codes">
             <add-to-group group-id="GenerateGroup" anchor="last"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift K"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="shift alt E"/>
         </action>
 
         <action
