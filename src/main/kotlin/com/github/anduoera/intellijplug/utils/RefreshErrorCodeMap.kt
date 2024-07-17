@@ -42,6 +42,9 @@ class RefreshErrorCodeMap {
         if (first == "null")return "0000"
         var tag=0
        do{
+           if(tag>200){
+               return "0000"
+           }
            first=first.toLongOrNull()?.inc().toString()
             var i=first.length
             while (i<4){
@@ -49,7 +52,7 @@ class RefreshErrorCodeMap {
                 i=first.length
             }
            tag++
-        } while (errorCodeMap[file.project.name]?.containsKey(first) == true&&first!="null"&&tag<1000)
+        } while (errorCodeMap[file.project.name]?.containsKey(first) == true)
         return first
     }
 

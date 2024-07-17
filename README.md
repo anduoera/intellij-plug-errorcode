@@ -16,6 +16,7 @@
 - [ ] Set the [Deployment Token](https://plugins.jetbrains.com/docs/marketplace/plugin-upload.html?from=IJPluginTemplate).
 - [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
 
+- -https://www.ideaplugin.com/idea-docs/Part%20IV%20%E2%80%94%20PSI/PSI%20References.html#references-with-optional-or-multiple-resolve-results
 <!-- Plugin description -->
 Adoni-ErrorCodeExamine
 

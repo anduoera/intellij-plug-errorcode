@@ -19,7 +19,7 @@ class ModifyErrorCodeActionMapConstants {
 
     private val modifyErrorCodeActionMap: HashMap<Boolean, ModifyErrorCodeAction> = hashMapOf()
 
-    fun getCodeChangeMap(): HashMap<Boolean, ModifyErrorCodeAction> {
+    fun getModifyErrorCodeActionMap(): HashMap<Boolean, ModifyErrorCodeAction> {
         initCodeChangeMap()
         return modifyErrorCodeActionMap
     }

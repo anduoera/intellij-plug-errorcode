@@ -1,6 +1,8 @@
 package com.github.anduoera.intellijplug.myAnAction.ModifyErrorCodeActionService
 
+import com.goide.psi.GoFile
 import com.intellij.codeInsight.editorActions.TypedHandlerDelegate
+import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiFile
@@ -12,5 +14,5 @@ import com.intellij.psi.PsiFile
  *
  */
 interface ModifyErrorCodeAction {
-    fun toDo( project: Project, file: PsiFile)
+    fun toDo( project: Project, file: GoFile,e: AnActionEvent)
 }
