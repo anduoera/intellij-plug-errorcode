@@ -39,6 +39,8 @@ class RefreshErrorCodeMap {
 
     fun getFirstAvailableErrorCode(file: PsiFile):String{
         var first = errorCodeTreeSet[file.project.name]?.get(file.name)?.first().toString()
+        if (first == "null")return "0000"
+        var tag=0
        do{
            first=first.toLongOrNull()?.inc().toString()
             var i=first.length
@@ -46,8 +48,8 @@ class RefreshErrorCodeMap {
                 first= "0$first"
                 i=first.length
             }
-
-        } while (errorCodeMap[file.project.name]?.containsKey(first) == true)
+           tag++
+        } while (errorCodeMap[file.project.name]?.containsKey(first) == true&&first!="null"&&tag<1000)
         return first
     }
 

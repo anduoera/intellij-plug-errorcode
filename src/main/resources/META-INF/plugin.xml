@@ -18,10 +18,9 @@
                 implementationClass="com.github.anduoera.intellijplug.listenFileChange.FileChangeListen"/>
         <typedHandler implementation="com.github.anduoera.intellijplug.listenCodeChange.CodeChangeListen"/>
     </extensions>
-
-    <applicationListeners>
-        <listener class="com.github.anduoera.intellijplug.StartupComponent" topic="com.intellij.ide.AppLifecycleListener"/>
-    </applicationListeners>
+    <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="com.github.anduoera.intellijplug.StartupComponent" />
+    </extensions>
 
     <actions>
         <action id="com.github.anduoera.intellijplug.myAnAction.ModifyErrorCodeAction" class="com.github.anduoera.intellijplug.myAnAction.ModifyErrorCodeAction" text="Modify Duplicated Error Codes" description="Modify duplicated error codes">

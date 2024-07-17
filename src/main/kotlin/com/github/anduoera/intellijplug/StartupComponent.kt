@@ -7,9 +7,15 @@ import com.goide.psi.GoConstDeclaration
 import com.goide.psi.GoFile
 import com.intellij.ide.AppLifecycleListener
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.components.AbstractProjectComponent
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManager
+import com.intellij.openapi.project.ProjectManagerListener
+import com.intellij.openapi.startup.ProjectActivity
+import com.intellij.openapi.vcs.changes.shelf.ShelveChangesManager
+import com.intellij.openapi.vcs.changes.shelf.ShelveChangesManager.PostStartupActivity
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.projectImport.ProjectOpenProcessor
 import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiManager
 import com.intellij.psi.util.PsiTreeUtil
@@ -24,27 +30,24 @@ import java.util.concurrent.ConcurrentHashMap
  * @Date: 2024/07/13/5:37
  *
  */
-class StartupComponent : AppLifecycleListener {
+class StartupComponent : ProjectActivity {
 
     private val errorCodeMap = ErrorCodeMapConstants.instance.getErrorCodeMap()
     private val errorCodeTreeSet = ErrorCodeTreeSetConstants.instance.getErrorCodeTreeSet()
     private val errorCodeBaseDir: String = "/model/exception"
-    override fun appStarted() {
-        var openProjects: Array<out Project>
-        do {
-            openProjects = ProjectManager.getInstance().openProjects
-            errorCodeMap.clear()
-            errorCodeTreeSet.clear()
-            processProject()
-        }while (openProjects.isEmpty())
+    override suspend fun execute(project: Project) {
+        errorCodeMap[project.name]?.clear()
+        errorCodeTreeSet[project.name]?.clear()
+        processProject(project.name)
     }
 
-    private fun processProject() {
+    private fun processProject(projectName:String) {
         val openProjects = ProjectManager.getInstance().openProjects
-        openProjects.map {
-            runBlocking {
+        for (openProject in openProjects) {
+            if (openProject.name!=projectName)continue
+            runBlocking{
                 launch {
-                    errorCodeMap[it.name] = ConcurrentHashMap(getCodeMap(it))
+                    errorCodeMap[openProject.name] = ConcurrentHashMap(getCodeMap(openProject))
                 }
             }
         }
