@@ -37,6 +37,7 @@ class ModifyErrorCodeAction : AnAction() {
     val modifyErrorCodeActionMap = ModifyErrorCodeActionMapConstants.instance.getModifyErrorCodeActionMap()
     override fun actionPerformed(e: AnActionEvent) {
         val project = e.project ?: return
+        if (project.name.endsWith("foundation")) return
         val file = e.getData(com.intellij.openapi.actionSystem.CommonDataKeys.PSI_FILE) ?: return
         if (file !is GoFile) return
         val packageClause: GoPackageClause? = file.getPackage()
