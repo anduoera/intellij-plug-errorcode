@@ -21,6 +21,16 @@
     <extensions defaultExtensionNs="com.intellij">
         <postStartupActivity implementation="com.github.anduoera.intellijplug.StartupComponent" />
     </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable instance="com.github.anduoera.intellijplug.mySettings.MySettingsConfigurable"
+                                 displayName="Error Code Settings"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <completion.contributor implementationClass="com.github.anduoera.intellijplug.macro.StringCompletionContributor"
+                                language="any"/>
+    </extensions>
+
 
     <actions>
         <action id="com.github.anduoera.intellijplug.myAnAction.ModifyErrorCodeAction" class="com.github.anduoera.intellijplug.myAnAction.ModifyErrorCodeAction" text="Modify Duplicated Error Codes" description="Modify duplicated error codes">

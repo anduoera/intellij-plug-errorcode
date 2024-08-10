@@ -39,7 +39,7 @@ intellij {
 
     // Plugin Dependencies. Uses `platformPlugins` property from the gradle.properties file.
     plugins = properties("platformPlugins").map { it.split(',').map(String::trim).filter(String::isNotEmpty) }
-    version.set("2023.1")
+    version.set("2023.2")
     type.set("GO")
 
     // required if Go language API is needed:
