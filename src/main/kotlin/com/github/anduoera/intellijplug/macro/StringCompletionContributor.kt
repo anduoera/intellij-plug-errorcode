@@ -30,7 +30,9 @@ class StringCompletionContributor : CompletionContributor() {
                         }
                         val strings = getStringList(parameters) // 获取你要提示的字符串集合
                         for (string in strings) {
-
+                            if(string.isEmpty()){
+                                continue
+                            }
                             val errorMessage=string.replace("ErrorCode","ErrorMessage")
                             val str="\t\t$structName.throw.ErrorCode = exception.$string\n" +
                                     "\t\t$structName.throw.ErrorMessage = exception.$errorMessage\n"

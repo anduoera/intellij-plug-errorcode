@@ -29,6 +29,7 @@ import com.intellij.psi.util.PsiTreeUtil
 import com.intellij.ui.components.JBList
 import com.jetbrains.rd.util.string.println
 import java.util.*
+import java.util.regex.Pattern
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
 import kotlin.io.path.name
@@ -48,9 +49,11 @@ class ExException : ModifyErrorCodeAction {
         val errorMessageStr:HashSet<String> = hashSetOf()
         PsiTreeUtil.processElements(file) { element ->
             if (element.text.startsWith("exception.ErrorCode")&& element.reference?.resolve()==null) {
-                errorCodeList.add(element.text.split(".")[1])
+                val errorCode=element.text.split(".")[1]
+                errorCodeList.add( errorCode.replace(Regex("[^a-zA-Z].*"), ""))
             }else if(element.text.startsWith("exception.ErrorMessage")&& element.reference?.resolve()==null){
-                errorMessageStr.add(element.text.split(".")[1])
+                val errorMessage=element.text.split(".")[1]
+                errorMessageStr.add( errorMessage.replace(Regex("[^a-zA-Z].*"), ""))
             }
             true
         }
