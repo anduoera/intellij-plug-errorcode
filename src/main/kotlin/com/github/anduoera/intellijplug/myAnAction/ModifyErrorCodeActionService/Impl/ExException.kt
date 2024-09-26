@@ -50,10 +50,10 @@ class ExException : ModifyErrorCodeAction {
         PsiTreeUtil.processElements(file) { element ->
             if (element.text.startsWith("exception.ErrorCode")&& element.reference?.resolve()==null) {
                 val errorCode=element.text.split(".")[1]
-                errorCodeList.add( errorCode.replace(Regex("[^a-zA-Z].*"), ""))
+                errorCodeList.add( errorCode.replace(Regex("[^a-zA-Z0-9].*"), "").trim())
             }else if(element.text.startsWith("exception.ErrorMessage")&& element.reference?.resolve()==null){
                 val errorMessage=element.text.split(".")[1]
-                errorMessageStr.add( errorMessage.replace(Regex("[^a-zA-Z].*"), ""))
+                errorMessageStr.add( errorMessage.replace(Regex("[^a-zA-Z0-9].*"), "").trim())
             }
             true
         }

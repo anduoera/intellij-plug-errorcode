@@ -46,14 +46,15 @@ class ReplaceErrorCodeUtils(var file: GoFile, var project: Project) {
             }
         }
         val document = PsiDocumentManager.getInstance(project).getDocument(file)
+        var insertStringText=""
         errorMessageStr.forEach {
-            WriteCommandAction.runWriteCommandAction(project) {
-                val errormessageOffset = lastErrorMessagePsiElement.parent.endOffset
-                if (document != null) {
-                    val value = it.replace("ErrorMessage","").replace(Regex("([A-Z])"), " $1").lowercase().trim()
-                    document.insertString(errormessageOffset, "\n\t$it = \"$value\"")
-                }
-            }
+            var value = it.replace("ErrorMessage","").replace(Regex("([A-Z])"), " $1").lowercase().trim()
+            insertStringText += "\n\t$it = \"$value\""
+        }
+
+        WriteCommandAction.runWriteCommandAction(project) {
+            val errormessageOffset = lastErrorMessagePsiElement.parent.endOffset
+            document?.insertString(errormessageOffset, insertStringText)
         }
     }
 
